@@ -31,7 +31,21 @@ function App() {
         let month = months[d.getMonth()];
         let year = d.getFullYear();
 
-        return `${day} ${date} ${month} ${year}`
+        if (date % 10 === 1) {
+            return `${day} ${date}st ${month}, ${year}`
+        } else if (date % 10 === 2) {
+            return `${day} ${date}nd ${month}, ${year}`
+        } else if (date % 10 === 3) {
+            return `${day} ${date}rd ${month}, ${year}`
+        } else {
+            return `${day} ${date}th ${month}, ${year}`
+        }
+    }
+
+    const iconBuilder = (i) => {
+        return (
+            <img src={`https://openweathermap.org/img/wn/${i}.png`} alt="icon" />
+        )
     }
 
     return (
@@ -55,9 +69,12 @@ function App() {
                         </div>
                         <div className="weather-box">
                             <div className="temp">
-                                {Math.round(weather.main.temp-273.15)}°C
+                                {Math.round(weather.main.temp - 273.15)}°C
                             </div>
-                            <div className="weather">{weather.weather[0].main}</div>
+                            <div className="weather-icon-box">
+                                <div className="weather">{weather.weather[0].main}</div>
+                                <div className="icon">{iconBuilder(weather.weather[0].icon)}</div>
+                            </div>
                         </div>
                     </div>
                 ) : ('')}

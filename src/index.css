@@ -9,7 +9,7 @@ body {
 }
 
 .app {
-  background: url('./assets/bg.jpg');
+  background: url('https://wallpapercave.com/wp/Z4CD0Ic.jpg'); /*default background*/
   background-size: cover;
   background-position: bottom;
   transition: 0.4 ease-out;
@@ -89,6 +89,15 @@ main {
   text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
   text-align: center;
   box-shadow: 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.weather-box .weather-icon-box {
+  display: flex;
+  justify-content: center;
+}
+
+.weather-box .weather-icon-box .icon {
+  margin-left: 10px;
 }
 
 .weather-box .weather {
