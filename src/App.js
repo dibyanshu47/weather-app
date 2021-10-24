@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const api = {
     key: "b55576efc74da9b3e22a8db1a2caf4ad",
@@ -9,16 +10,19 @@ function App() {
 
     const [query, setQuery] = useState('');
     const [weather, setWeather] = useState({});
+    const [err, setErr] = useState({});
 
-    const search = evt => {
+    const search = async evt => {
         if (evt.key === "Enter") {
-            fetch(`${api.base}weather?q=${query}&unit=metric&APPID=${api.key}`)
-                .then(res => res.json())
-                .then(result => {
-                    setQuery('');
-                    setWeather(result);
-                    console.log(result);
-                });
+            try {
+                const { data } = await axios.get(`${api.base}weather?q=${query}&unit=metric&APPID=${api.key}`);
+                setErr({});
+                setQuery('');
+                setWeather(data);
+            } catch (error) {
+                setWeather({});
+                setErr(error.response.data);
+            }
         }
     }
 
@@ -77,7 +81,9 @@ function App() {
                             </div>
                         </div>
                     </div>
-                ) : ('')}
+                ) : ((typeof err.cod != "undefined") ? (
+                    <div className="error">No such city exist.</div>
+                ) : (''))}
             </main>
         </div>
     );
